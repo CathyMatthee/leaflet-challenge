@@ -73,8 +73,11 @@ function chooseColour(depth) {
     else return "#f0dba5";
 }
 
-// Define a markerSize() function that will featurea radius based on its magnitude.
+// Define a createCircle() function that will feature a radius based on its magnitude and behave like a marker so that it does not
+// cloud the map details when zooming in.
 function markerSize(magnitude) {
+    // console.log(magnitude);
+    if (magnitude < "0") return (magnitude = "0")
     return Math.sqrt(magnitude) * 8;
 }
 
@@ -97,7 +100,7 @@ d3.json(eq_url).then(function(data) {
   // Creating a GeoJSON layer with the retrieved data  
   let earthquakes = L.geoJson(data, {
     pointToLayer: function(feature, latlng) {
-      // Call the function to create circles instead of point markers
+      // Call the function to create circles instead of regular point markers
       return createCircle(feature, latlng);
     },
 
